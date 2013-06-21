@@ -63,13 +63,11 @@
         <section>
           <section>
             <h2>Quiz</h2>
-          </section>
-
-          <section>
             <img alt="" src="images/javascript_1.jpg" />
           </section>
 
           <section>
+            <h3>Whats the output of console.log?</h3>
             <pre>
               <code class="javascript">
               &gt; var foo = 1;
@@ -86,8 +84,12 @@
           </section>
 
           <section>
+            <img alt="" src="images/dude-wait-wat.jpg" />
+          </section>
+
+          <section>
             <pre>
-              <code class="javascript">              // What your wrote
+              <code class="javascript">              // What you wrote
               var foo = 1;
               function bar() {
                 if (!foo) {
@@ -95,7 +97,7 @@
                 }
                 console.log(foo);
               }
-              <span class="fragment fade-in">// What your really wrote
+              <span class="fragment fade-in">// What you really wrote
               var foo = 1;
               function bar() {
                 var foo;
@@ -483,12 +485,33 @@ var urls = paths.map(urlBuilder);
         </section>
         <!-- end function invocations -->
 
-        <!-- events -->
+        <!-- handling the async -->
         <section>
 
-          <section>
+        	<section>
+        		<h2>Handling the Async</h2>
+        	</section>
+
+        	<section>
           	<h2>Embrace Eventing</h2>
-          </section>
+            <ul>
+              <li class="fragment fade-in">Models Real Life Interactions</li>
+            	<li class="fragment fade-in">Promotes Decoupling</li>
+            	<li class="fragment fade-in">Abstracts Implementation</li>
+              <li class="fragment fade-in">Flexible </li>
+            </ul>
+        	</section>
+
+        </section>
+        <!-- end handling async -->
+
+        <!-- callbacks don't -->
+        <section>
+
+        	<section>
+        		<h2>Callbacks...</h2>
+        		<h2 class="fragment fade-in">...don't</h2>
+        	</section>
 
           <section>
             <h2>Pyramid of Doom</h2>
@@ -517,81 +540,21 @@ var urls = paths.map(urlBuilder);
             <img alt="" src="images/callbacks_in_your_callback.jpg" />
           </section>
 
-
-        	<section>
-        		<h2>Using Events</h2>
-            <ul>
-              <li class="fragment fade-in">Models Real Life Interactions</li>
-            	<li class="fragment fade-in">Promotes Decoupling</li>
-            	<li class="fragment fade-in">Abstracts Implementation</li>
-              <li class="fragment fade-in">Flexible </li>
-            </ul>
-        	</section>
-
           <section>
-          	<h3>Global Event Bus</h3>
+          	<h3>Why no callback love</h3>
             <ul>
-            	<li class="fragment fade-in">Necessary to facilitate communication between multiple parts of system.</li>
-              <li class="fragment fade-in">
-                Think RabbitMQ, NServiceBus, etc
-                <ul class="fragment fade-in">
-                	<li>Queueing</li>
-                  <li>Global Failures</li>
-                  <li>Routing</li>
-                </ul>
-              </li>
+              <li class="fragment fade-in">Limits handling of event</li>
+            	<li class="fragment fade-in">Awkward error handling</li>
+              <li class="fragment fade-in">Callback leaks through out your abstractions</li>
+              <li class="fragment fade-in">Lots of better, more flexible alternatives</li>
             </ul>
-            <pre class="fragment fade-in">
-              <code class="javascript">
-  global.MyApp.GrandCentralDispatch
-    .on("cart.checkOutCompleted", LetMeKnow);
-              </code>
-            </pre>
           </section>
 
           <section>
-          	<h3>Namespace Events</h3>
-          	<pre>
-              <code class="javascript">
-  button.on('click.my-name-space', onClickHandler);
-
-  // Easily unbind your click handlers without disturbing others
-  button.off('click.my-name-space');
-              </code>
-          	</pre>
+            <img alt="" src="images/skeptical-dog-anecdotal.jpg" />
           </section>
 
           <section>
-          	<h3>Proxy Events</h3>
-          	<pre>
-              <code class="coffeescript">class InboxController
-  constructor: (messages) -&gt;
-    this._listController = new ListController(messages)
-    this._listController.on(
-      'item-selected', this._messageSelected
-    )
-
-  _messageSelected: (message)-&gt;
-    this.trigger('message-selected', message)
-
-<span class="fragment fade-in">
-var inboxController = new InboxController(messages)
-inboxController.on('message-selected', doSomething)</span>
-              </code>
-          	</pre>
-          </section> 
-        </section>
-        <!-- end events -->
-
-
-        <!-- handling the async -->
-        <section>
-        	<section>
-        		<h2>Handling the Async</h2>
-        	</section>
-
-          <section>
-          	<h3>Callbacks - don't</h3>
           	<pre>
               <code class="javascript">
 FoodService.prototype.getLunch = function (order, callback) {
@@ -627,14 +590,14 @@ FoodService.prototype.getLunch = function (order) {
 FoodService.prototype.getLunch = function getLunch(order) {
   var deferred = this._getLunchPromise = $.Deferred();
   //.. set off to do stuff and resolve/fail the promise later
-  return deferred.promise(); 
+  return deferred.promise();
 }
               </code>
           	</pre>
           </section>
-          
+
         </section>
-        <!-- end handling async -->
+        <!-- end callbacks don't -->
 
         <!-- promises -->
         <section>
@@ -731,6 +694,72 @@ FoodService.prototype.getLunch = function getLunch(order) {
 
         </section>
         <!-- end promises -->
+
+        <section>
+
+        	<section>
+        		<h2>Even more eventing strategies</h2>
+        	</section>
+
+          <section>
+          	<h3>Global Event Bus</h3>
+            <ul>
+            	<li class="fragment fade-in">Necessary to facilitate communication between multiple parts of system.</li>
+              <li class="fragment fade-in">
+                Think RabbitMQ, NServiceBus, etc
+                <ul class="fragment fade-in">
+                	<li>Queueing</li>
+                  <li>Global Failures</li>
+                  <li>Routing</li>
+                </ul>
+              </li>
+            </ul>
+            <pre class="fragment fade-in">
+              <code class="javascript">
+  global.MyApp.GrandCentralDispatch
+    .on("cart.checkOutCompleted", LetMeKnow);
+              </code>
+            </pre>
+          </section>
+
+          <section>
+          	<h3>Proxy Events</h3>
+          	<pre>
+              <code class="coffeescript">class InboxController
+  constructor: (messages) -&gt;
+    this._listController = new ListController(messages)
+    this._listController.on(
+      'item-selected', this._messageSelected
+    )
+
+  _messageSelected: (message)-&gt;
+    this.trigger('message-selected', message)
+
+<span class="fragment fade-in">
+var inboxController = new InboxController(messages)
+inboxController.on('message-selected', doSomething)</span>
+              </code>
+          	</pre>
+          </section>
+
+          <section>
+          	<h3>Namespace Events</h3>
+          	<pre>
+              <code class="javascript">
+  button.on('click.my-name-space', onClickHandler);
+
+  // Easily unbind your click handlers without disturbing others
+  button.off('click.my-name-space');
+              </code>
+          	</pre>
+          </section>
+        </section>
+
+        <section>
+          <h2>Thanks - any questions?</h2>
+          <p>Dan Shultz &bull; OverDrive, Inc</p>
+          <p>@danshultz</p>
+        </section>
 
 			</div>
 
