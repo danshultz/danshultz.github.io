@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Cooking With Chef</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<link rel="stylesheet" href="css/ds.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section class="title-slide">
+          <div style="float: left; width: 30%">
+            <img alt="Chef Logo" src="images/logo-chef.png" />
+          </div>
+          <div style="float: right; width: 60%">
+            <h1>Cooking With Chef</h1>
+            <p>Dan Shultz &bull; OverDrive, Inc</p>
+            <p>@danshultz</p>
+          </div>
+				</section>
+
+        <section>
+        	<h1>Who Am I</h1>
+          <ul>
+            <li class="fragment fade-in">8 Years Writing Web Applications</li>
+            <li class="fragment fade-in">Teacher</li>
+            <li class="fragment fade-in">Write Lots of JavaScript</li>
+            <li class="fragment fade-in">...and Ruby</li>
+            <li class="fragment fade-in">...and Python</li>
+            <li class="fragment fade-in">...occassionaly .NET</li>
+            <li class="fragment fade-in">Server Jugler/Cloud Rider</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <section>
+            <h1>Do You Server?</h1>
+          </section>
+          <section>
+            <h3>Things work in dev but not production?</h3>
+            <img src="images/works-in-my-environment.jpg" alt="" />
+          </section>
+          <section>
+            <h3>Abusive by infrastructure team?</h3> 
+            <img src="images/supporting-developers.jpg" alt="" />
+          </section>
+          <section>
+            <h3>Infrastructure upgrades go like this?</h3>
+            <img src="images/deploy-to-production.gif" alt="" />
+          </section>
+          <section>
+            <h3>Think the cloud will make things better?</h3>
+            <img src="images/GarbageInGarbageOut.jpg" alt="to the cloud" />
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <img src="images/problem.jpg" alt="Houston, we've got a problem" />
+          </section>
+          <section>
+            <ul>
+              <li >Developers Need to Create Environments</li>
+              <li class="fragment fade-in">Configuration as Documentation</li>
+              <li class="fragment fade-in">Infrastructure as Code</li>
+              <li class="fragment fade-in">Reproducible and Predictible</li>
+              <li class="fragment fade-in">Fast and Responsive</li>
+            </ul>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h1>Chef</h1>
+          </section>
+          <section>
+            <img src="images/SouthParkChef.png" alt="South Park Chef" />
+          </section>
+          <section>
+            <h3>System and Cloud Infrastructure Automation Framework</h3>
+            <p>
+            ...that makes it easy to deploy servers and applications to any physical, 
+            virtual or cloud location, no matter the size of the infrastructure.
+            </p>
+          </section>
+        </section>
+
+
+        <section>
+        	<section>
+        		<h1>Why Chef</h1>
+        	</section>
+          <section>
+          	<h3>Idempotence</h3>
+            <p>Recipe runs of the same configuration always produce the same resolution 
+            across systems and chef runs where nothing has changed, take no actions</p>
+          </section>
+          <section>
+          	<h3>Reasonable Run Ordering</h3>
+            <p>
+            Chef order is declarative and recipes are run in the order they are declared. 
+            Within a recipe, resources are applied in the order they are declared. 
+            There is no dependency management system. If you add a new cookbook/recipe at the 
+            end of your run list, the run order doesn't change 
+            </p>
+          </section>
+          <section>
+          	<h3>Easy Configuration/Sane Defaults</h3>
+          	<p>Generic Cookbooks work with little or no configuration. Attributes are easily changed and assigned</p>
+          </section>
+          <section>
+          	<h3>Extendable</h3>
+            <ul>
+            	<li>Resource</li>
+            	<li>Recipe DSLs</li>
+            	<li>Light Weight Resource Providers</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+        	<section>
+        		<h1>Getting to Know Chef</h1>
+        	</section>
+          <section>
+            <img src="images/chef-architecture.png" alt="Chef Architecture" />
+          </section>
+          <section>
+          	<h3>Chef Server</h3>
+            <ul>
+            	<li>Keeps track of your nodes</li>
+              <li class="fragment fade-in">Serves cookbooks</li>
+              <li class="fragment fade-in">Allows you to search across your nodes</li>
+              <li class="fragment fade-in">Manages node data</li>
+            </ul>
+          </section>
+          <section>
+            <img src="images/chef-architecture.png" alt="Chef Architecture" />
+          </section>
+          <section>
+          	<h3>Chef Client</h3>
+            <ul>
+            	<li>Runs on your nodes</li>
+              <li class="fragment fade-in">Communicates to Chef Server</li>
+              <li class="fragment fade-in">Compiles and Executes Cookbooks</li>
+            </ul>
+          </section>
+          <section>
+            <img src="images/chef-architecture.png" alt="Chef Architecture" />
+          </section>
+
+          <section>
+          	<h3>Chef Solo</h3>
+            <ul>
+            	<li>Like chef client but...</li>
+              <li class="fragment fade-in">Does not use chef server</li>
+              <li class="fragment fade-in">Does not provide environments</li>
+              <li class="fragment fade-in">It's up to you to get your cookbooks and data to the server</li>
+            </ul>
+          </section>
+
+          <section>
+          <h3>Cookbooks</h3>
+          <pre>
+            <code>    % tree cookbooks/mycookbook
+    cookbooks/mycookbook
+    ├── README.md
+    ├── attributes
+    ├── definitions
+    ├── files
+    │   └── default
+    ├── libraries
+    ├── metadata.rb
+    ├── providers
+    ├── recipes
+    │   └── default.rb
+    ├── resources
+    └── templates
+        └── default
+            </code>
+          </pre>
+          </section>
+
+          <section>
+          	<h3>Recipes</h3>
+            <p>Scripts to install/configure servers and define services</p>
+            <pre>
+            	<code class="ruby">package node['nginx']['package_name']
+
+template "nginx.conf" do
+  path "#{node['nginx']['dir']}/nginx.conf"
+  source "nginx.conf.erb"
+  owner "root"
+  group "root"
+  mode 00644
+  notifies :reload, 'service[nginx]'
+end
+
+service 'nginx' do
+  supports :status =&gt; true, :restart =&gt; true, :reload =&gt; true
+  action :enable
+end
+</code>
+            </pre>
+          </section>
+
+          <section>
+          	<h3>Attributes</h3>
+            <p>Configuration for recipes</p>
+            <pre>
+              <code class="ruby">default['nginx']['version'] = "1.2.6"
+default['nginx']['package_name'] = "nginx"
+default['nginx']['dir'] = "/etc/nginx"
+default['nginx']['log_dir'] = "/var/log/nginx"
+default['nginx']['binary'] = "/usr/sbin/nginx"</code>
+            </pre>
+          </section>
+        </section>
+
+
+        <section>
+        <img src="images/but-wait-theres-more.jpg" alt="" />
+        </section>
+
+        <section>
+          <section>
+            <h1>The Tools</h1>
+            <ul>
+            	<li class="fragment fade-in">VirtualBox</li>
+            	<li class="fragment fade-in">Vagrant</li>
+            	<li class="fragment fade-in">Capistrano</li>
+            	<li class="fragment fade-in">Community Cookbooks</li>
+            	<li class="fragment fade-in">Berkshelf</li>
+            	<li class="fragment fade-in">Chef-Solo</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Chef Server Need Not Apply</h3>
+            <ul>
+            	<li>Keep Things Simple</li>
+            	<li>One Less Dependency</li>
+            	<li>Decentralized Server Management</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Vagrant for Development</h1>
+            <h3>Development environments made easy.</h3>
+          </section>
+          <section>
+            <h3>Vagrant for Development</h3>
+            <ul>
+            	<li class="fragment fade-in">Create Local VMs</li>
+            	<li class="fragment fade-in">Test Deployments</li>
+            	<li class="fragment fade-in">Configured Similar to Production</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Installation</h3>
+            <ol>
+            	<li>Visit <a href="http://www.vagrantup.com/">Vagrant Website</a> and download vagrant</li>
+              <li>Install</li>
+              <li>run `vagrant init`</li> 
+              <li>Update created Vagrantfile</li>
+              <li>run `vagrant up`</li> 
+            </ol>
+          </section>
+        </section>
+
+        <section>
+        	<h2>Bootstrap With Capistrano</h2>
+          <pre>
+          	<code class="bash">$ cap chef deploy:setup</code>
+          </pre>
+          *<a href="https://github.com/danshultz/chef-solo-rails/blob/master/config/recipes/chef.rb" target="_blank">Capistrano Recipe</a>
+        </section>
+
+        <section>
+          <section>
+            <h1>Build on Community Cookbooks</h1>
+            <a href="http://community.opscode.com/cookbooks">Opscode Community</a>
+          </section>
+          <section>
+          	<h3>Cookbooks Are Basic</h3>
+            <ul>
+            	<li>Data/Attribute Driven</li>
+            	<li>Basic Case</li>
+            	<li>Work out of the box</li>
+            </ul>
+          </section>
+          <section>
+          <h3>Create Wapper Cookbooks</h3>
+          <ul>
+          	<li>Don't Fork and Modify Community Cookbooks for Concrete Usage</li>
+          	<li>Cookbooks can be versioned, Roles Can't</li>
+          	<li>Create App Specific Cookbooks</li>
+          </ul>
+          </section>
+          <section>
+            <h3>Rails App Wrapper Cookbook</h3>
+          	<pre>
+              <code class="bash">% tree rails_app/
+rails_app/
+├── attributes
+├── definitions
+├── libraries
+├── metadata.rb
+├── providers
+├── recipes
+│   ├── app.rb
+│   ├── database.rb
+│   ├── default.rb
+│   └── web.rb
+├── resources
+└── templates
+    └── default
+            └── pg_hba.conf.erb</code>
+          	</pre>
+          </section>
+          <section>
+          <h3>rails_app/recipes/database.rb</h3>
+          <pre>
+          	<code class="ruby">include_recipe("postgresql")
+include_recipe("postgresql::server")
+include_recipe("postgresql::ruby")
+
+# use a custom hba_config
+hba_conf = resources("template[#{node['postgresql']['dir']}/pg_hba.conf]")
+hba_conf.source("pg_hba.conf.erb")
+hba_conf.cookbook("rails_app")
+
+
+postgresql_connection_info = {
+  :host =&gt; "localhost",
+  :port =&gt; node['postgresql']['config']['port'],
+  :username =&gt; 'postgres',
+  :password =&gt; node['postgresql']['password']['postgres']
+}</code>
+          </pre>
+          <a class="small" href="https://github.com/danshultz/chef-solo-rails/blob/master/chef/cookbooks/rails_app/recipes/database.rb">full file</a>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Berkshelf</h1>
+          </section>
+
+          <section>
+          	<h3>Create Cookbook Scaffolding</h3>
+            <pre>
+            	<code class="bash">$ berks cookbook rails_app</code>
+            </pre>
+          </section>
+
+          <section>
+            <h3>Resolve Cookbook Dependencies</h3>
+            <p>Berksfile</p>
+            <pre>
+              <code class="ruby">site :opscode
+              
+cookbook('nginx', '~&gt; 1.7.0')
+cookbook('postgresql', '~&gt; 3.0.2')
+cookbook('ssh-keys')
+cookbook('rails_app', :path =&gt; './chef/cookbooks/rails_app')</code>
+            </pre>
+          </section>
+        </section>
+
+        <section>
+        	<h1>Configure with Chef-Solo</h1>
+        </section>
+
+        <section>
+        	<h1>To the Cloud</h1>
+        </section>
+
+				<section class="title-slide">
+          <div style="float: left; width: 30%">
+            <img alt="Chef Logo" src="images/logo-chef.png" />
+          </div>
+          <div style="float: right; width: 60%">
+            <h1>Thank You</h1>
+            <p>Dan Shultz &bull; OverDrive, Inc</p>
+            <p>@danshultz</p>
+          </div>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
