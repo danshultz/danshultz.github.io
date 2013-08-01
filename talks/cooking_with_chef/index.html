@@ -37,9 +37,9 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 
-				<section class="title-slide">
+				<section class="title-slide" data-background="green">
           <div style="float: left; width: 30%">
-            <img alt="Chef Logo" src="images/logo-chef.png" />
+            <img alt="Chef Logo" src="images/logo-chef.png" style="border: none; background: none; box-shadow: none;"/>
           </div>
           <div style="float: right; width: 60%">
             <h1>Cooking With Chef</h1>
@@ -281,8 +281,8 @@ default['nginx']['binary'] = "/usr/sbin/nginx"</code>
 
         <section>
           <section>
-            <h1>Vagrant for Development</h1>
-            <h3>Development environments made easy.</h3>
+            <h3>Vagrant for Development</h3>
+            <p>Development environments made easy.</p>
           </section>
           <section>
             <h3>Vagrant for Development</h3>
@@ -305,16 +305,16 @@ default['nginx']['binary'] = "/usr/sbin/nginx"</code>
         </section>
 
         <section>
-        	<h2>Bootstrap With Capistrano</h2>
+        	<h3>Bootstrap With Capistrano</h3>
+          <p><a href="https://github.com/danshultz/chef-solo-rails/blob/master/config/recipes/chef.rb#L57" target="_blank">config/recipes/chef.rb</a></p>
           <pre>
           	<code class="bash">$ cap chef deploy:setup</code>
           </pre>
-          *<a href="https://github.com/danshultz/chef-solo-rails/blob/master/config/recipes/chef.rb" target="_blank">Capistrano Recipe</a>
         </section>
 
         <section>
           <section>
-            <h1>Build on Community Cookbooks</h1>
+            <h3>Build on Community Cookbooks</h3>
             <a href="http://community.opscode.com/cookbooks">Opscode Community</a>
           </section>
           <section>
@@ -355,7 +355,7 @@ rails_app/
           	</pre>
           </section>
           <section>
-          <h3>rails_app/recipes/database.rb</h3>
+          <h3>Example Recipe</h3>
           <pre>
           	<code class="ruby">include_recipe("postgresql")
 include_recipe("postgresql::server")
@@ -374,24 +374,21 @@ postgresql_connection_info = {
   :password =&gt; node['postgresql']['password']['postgres']
 }</code>
           </pre>
-          <a class="small" href="https://github.com/danshultz/chef-solo-rails/blob/master/chef/cookbooks/rails_app/recipes/database.rb">full file</a>
+          <a class="small" href="https://github.com/danshultz/chef-solo-rails/blob/master/chef/cookbooks/rails_app/recipes/database.rb">rails_app/recipes/database.rb</a>
           </section>
         </section>
 
         <section>
-          <section>
-            <h1>Berkshelf</h1>
-          </section>
 
           <section>
-          	<h3>Create Cookbook Scaffolding</h3>
+          	<h3>Berkshelf to Create Cookbook Scaffolding</h3>
             <pre>
             	<code class="bash">$ berks cookbook rails_app</code>
             </pre>
           </section>
 
           <section>
-            <h3>Resolve Cookbook Dependencies</h3>
+            <h3>Berkshelf to Resolve Cookbook Dependencies</h3>
             <p>Berksfile</p>
             <pre>
               <code class="ruby">site :opscode
@@ -405,19 +402,29 @@ cookbook('rails_app', :path =&gt; './chef/cookbooks/rails_app')</code>
         </section>
 
         <section>
-        	<h1>Configure with Chef-Solo</h1>
+          <section>
+            <h3>Configure with Chef-Solo</h3>
+            <h4>Using Capistrano</h4>
+            <pre>
+              <code class="ruby">set(:chef_attributes) { File.join('/etc/chef', "attributes.json") }
+
+find_servers.each { |server|
+  json = JSON.pretty_generate(server.options[:chef_attributes])
+  put(json, chef_attributes, :hosts =&gt; server.host)
+}
+sudo("chef-solo -j #{chef_attributes}")
+              </code>
+            </pre>
+            <p><a class="small" href="https://github.com/danshultz/chef-solo-rails/blob/master/config/recipes/chef.rb#L25" target="_blank">config/recipes/chef.rb</a></p>
+          </section>
         </section>
 
-        <section>
-        	<h1>To the Cloud</h1>
-        </section>
-
-				<section class="title-slide">
+				<section class="title-slide" data-background="green">
           <div style="float: left; width: 30%">
-            <img alt="Chef Logo" src="images/logo-chef.png" />
+            <img alt="Chef Logo" src="images/logo-chef.png" style="border: none; background: none; box-shadow: none;"/>
           </div>
           <div style="float: right; width: 60%">
-            <h1>Thank You</h1>
+            <h1>Thank you</h1>
             <p>Dan Shultz &bull; OverDrive, Inc</p>
             <p>@danshultz</p>
           </div>
