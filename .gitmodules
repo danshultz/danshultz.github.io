@@ -1,3 +1,0 @@
-[submodule "talks/reveal.js"]
-	path = talks/reveal.js
-	url = git://github.com:hakimel/reveal.js.git
